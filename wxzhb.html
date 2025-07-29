@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <meta name="description" content="" />
+    <link href="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" rel="shortcut icon" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, viewport-fit=cover" />
+    <script src="https://ldfcommon7.oss-cn-beijing.aliyuncs.com/js/jquery.min.js" type="application/javascript"></script>
+    <style>
+        #myFrame {
+            display: block;
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            border: none;
+            float: left;
+        }
+    </style>
+</head>
+<body>
+  <iframe id="myFrame" src=""></iframe>
+  
+  <script>
+    // 监听子页面发送的消息
+    window.addEventListener('message', (event) => {
+        window.location.href = event.data
+    });
+    function getUrlParam(paraName) {
+        var url = window.location.href;
+        let urlObj = new URL(url);
+        let params = new URLSearchParams(urlObj.search);
+        return params.get(paraName);
+    }
+    function isWeiXin(){
+        var ua = navigator.userAgent.toLowerCase()
+        var isWXWork = ua.match(/wxwork/i) == 'wxwork'
+        var isWeixin = !isWXWork && ua.match(/micromessenger/i) == 'micromessenger'
+        return isWeixin;
+    }
+
+    var id = getUrlParam('id');
+    if(id=='' || id=='/' || id==null || id==undefined){
+        document.getElementById('myFrame').src = `https://ad2.zhb1.com/l/error.html`;
+    }else{
+        //拼接参数
+        var search = window.location.search.slice(1);
+        var jumpurl = search == "" ? `https://ad2.zhb1.com/l/${id}.html` : `https://ad2.zhb1.com/l/${id}.html?${search}`
+        if(isWeiXin()){
+            document.getElementById('myFrame').src = jumpurl;
+        }else{
+            window.location.href = jumpurl;
+        }
+    }
+  </script>
+</body>
+</html>
