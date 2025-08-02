@@ -25,7 +25,7 @@
   
   <script>
     window.addEventListener('message', (event) => {
-        window.location.href = event.data
+        window.location.replace(event.data);
     });
     function getUrlParam(paraName) {
         var url = window.location.href;
